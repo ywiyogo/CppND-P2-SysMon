@@ -1,11 +1,15 @@
+#include "ncurses_display.h"
+
 #include <curses.h>
+
+#include <algorithm>
 #include <chrono>
+#include <iostream>
 #include <string>
 #include <thread>
 #include <vector>
 
 #include "format.h"
-#include "ncurses_display.h"
 #include "system.h"
 
 using std::string;
@@ -69,8 +73,16 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   mvwprintw(window, row, time_column, "TIME+");
   mvwprintw(window, row, command_column, "COMMAND");
   wattroff(window, COLOR_PAIR(2));
+
   for (int i = 0; i < n; ++i) {
-    mvwprintw(window, ++row, pid_column, to_string(processes[i].Pid()).c_str());
+    string pidstr = std::to_string(processes[i].Pid());
+    int diffspace = 4 - pidstr.size();
+    if (diffspace > 0)
+      pidstr.append(diffspace, ' ');  // insert more space
+    else if (diffspace < 0)
+      pidstr = pidstr.substr(0, 4);  // return the substring for 4 bytes length
+
+    mvwprintw(window, ++row, pid_column, pidstr.c_str());
     mvwprintw(window, row, user_column, processes[i].User().c_str());
     float cpu = processes[i].CpuUtilization() * 100;
     mvwprintw(window, row, cpu_column, to_string(cpu).substr(0, 4).c_str());
