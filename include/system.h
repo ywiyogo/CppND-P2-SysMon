@@ -4,13 +4,14 @@
 #include <string>
 #include <vector>
 
+#include "i_osparser.h"
 #include "process.h"
 #include "processor.h"
-#include "i_osparser.h"
 
 class System {
  public:
   System();
+  ~System();
   Processor& Cpu();                   // DONE: See src/system.cpp
   std::vector<Process>& Processes();  // DONE: See src/system.cpp
   float MemoryUtilization();          // DONE: See src/system.cpp
@@ -22,6 +23,7 @@ class System {
 
   // DONE: Define any necessary private members
  private:
+  // A pointer to the interface parser
   IOsParser* p_parser_;
   Processor cpu_;
   std::vector<Process> processes_ = {};

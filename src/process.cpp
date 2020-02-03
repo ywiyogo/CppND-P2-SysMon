@@ -48,7 +48,7 @@ long int Process::UpTime() { return p_parser_->UpTime(pid_); }
 bool Process::operator<(Process const& a) const {
   return cpu_util_ < a.cpu_util_;
 }
-
+// overload operator for the sort function greater
 bool Process::operator>(Process const& a) const {
   return cpu_util_ > a.cpu_util_;
 }

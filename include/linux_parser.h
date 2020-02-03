@@ -6,7 +6,7 @@
 #include <string>
 
 #include "i_osparser.h"
-
+// Implementation of the parser in Linux environment
 class LinuxParser : public IOsParser {
  public:
   LinuxParser();
@@ -58,7 +58,8 @@ class LinuxParser : public IOsParser {
   virtual std::string User(int pid);
   virtual long int UpTime(int pid);
 
-  private:
+ private:
+  long testUpTime();
   void AddOffsetSpace(std::string& text, int n);
 };  // Class LinuxParser
 

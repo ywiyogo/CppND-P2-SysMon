@@ -19,7 +19,10 @@ using std::vector;
 
 // constructor
 System::System() : p_parser_(new LinuxParser()), cpu_(p_parser_) {}
-
+System::~System() {
+  delete p_parser_;
+  p_parser_ = nullptr;
+}
 // DONE: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
@@ -28,7 +31,7 @@ vector<Process>& System::Processes() {
   vector<int> pids = p_parser_->Pids();
   processes_ = {};
   for (auto const& pid : pids) {
-    // create a Process obj and pass to the vector if process doesn't exist
+    // create a Process obj and pass to the vector
     processes_.emplace_back(pid, p_parser_);
   }
   std::sort(processes_.begin(), processes_.end(), std::greater<Process>());

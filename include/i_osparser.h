@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+// An interface for the abstraction, since the parser in Windows is different
+// compared to Linux
 class IOsParser {
  public:
   virtual ~IOsParser(){};
